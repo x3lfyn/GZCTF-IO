@@ -18,16 +18,21 @@ public enum Role : byte
     /// Regular user role
     /// </summary>
     User = 1,
+    
+    /// <summary>
+    /// Special robot role, the only(+admin) role which can manage teams
+    /// </summary>
+    SchoolRobot = 2,
 
     /// <summary>
     /// Monitor role, can query submission logs
     /// </summary>
-    Monitor = 2,
+    Monitor = 3,
 
     /// <summary>
     /// Admin role, can view system logs
     /// </summary>
-    Admin = 3
+    Admin = 4
 }
 
 /// <summary>

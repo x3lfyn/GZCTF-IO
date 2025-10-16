@@ -83,7 +83,7 @@ public partial class TeamController(
     /// <response code="200">Successfully retrieved team information</response>
     /// <response code="400">Team does not exist</response>
     [HttpPost]
-    [RequireUser]
+    [RequireRobot]
     [EnableRateLimiting(nameof(RateLimiter.LimitPolicy.Concurrency))]
     [ProducesResponseType(typeof(TeamInfoModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -128,7 +128,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(TeamInfoModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -168,7 +168,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPut("{id:int}/Transfer")]
     [ProducesResponseType(typeof(TeamInfoModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -227,7 +227,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpGet("{id:int}/Invite")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -261,7 +261,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPut("{id:int}/Invite")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -300,7 +300,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPost("{id:int}/Kick/{userId:guid}")]
     [ProducesResponseType(typeof(TeamInfoModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -365,7 +365,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPost("Accept")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -433,7 +433,7 @@ public partial class TeamController(
     /// <response code="400">Team does not exist</response>
     /// <response code="401">Unauthorized</response>
     /// <response code="403">Access forbidden</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPost("{id:int}/Leave")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -485,7 +485,7 @@ public partial class TeamController(
     /// <response code="200">User avatar URL</response>
     /// <response code="400">Invalid request</response>
     /// <response code="401">Unauthorized user</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpPut("{id:int}/Avatar")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]
@@ -540,7 +540,7 @@ public partial class TeamController(
     /// <param name="token"></param>
     /// <response code="200">Successfully retrieved team information</response>
     /// <response code="400">Team does not exist</response>
-    [RequireUser]
+    [RequireRobot]
     [HttpDelete("{id:int}")]
     [ProducesResponseType(typeof(TeamInfoModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status400BadRequest)]

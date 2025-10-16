@@ -30,6 +30,7 @@ public class AccountController(
     IOptionsSnapshot<GlobalConfig> globalConfig,
     UserManager<UserInfo> userManager,
     SignInManager<UserInfo> signInManager,
+    ITeamRepository teamRepository,
     ILogger<AccountController> logger,
     IStringLocalizer<Program> localizer) : ControllerBase
 {
@@ -554,6 +555,13 @@ public class AccountController(
         if (result != IdentityResult.Success)
             return BadRequest(new RequestResponse(localizer[nameof(Resources.Program.Account_UserUpdateFailed)]));
 
+        var team = (await teamRepository.GetUserTeams(user!, token)).FirstOrDefault();
+        if (team is not null)
+        {
+            team.AvatarHash = avatar.Hash;
+            await teamRepository.SaveAsync(token);
+        }
+        
         logger.Log(StaticLocalizer[nameof(Resources.Program.Account_AvatarUpdated), avatar.Hash[..8]], user,
             TaskStatus.Success);
 

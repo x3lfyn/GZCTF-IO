@@ -8,7 +8,9 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy",
-        "GZCTF_QUERY_LOGGING": "true"
+        "GZCTF_QUERY_LOGGING": "true",
+        "GZCTF_ConnectionStrings__Database": "Host=localhost:5432;Database=gzctf;Username=postgres;Password=postgres",
+        "GZCTF_XorKey": "4d3825df9062ea5d5badc5c9b07632b8cd0377ab00dde35d8280518f4ba1d5c1",
       }
     }
   }

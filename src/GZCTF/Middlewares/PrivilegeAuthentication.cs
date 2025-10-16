@@ -77,6 +77,11 @@ public class RequirePrivilegeAttribute(Role privilege, bool allowToken = false) 
 public class RequireUserAttribute() : RequirePrivilegeAttribute(Role.User);
 
 /// <summary>
+/// School robot required
+/// </summary>
+public class RequireRobotAttribute() : RequirePrivilegeAttribute(Role.SchoolRobot);
+
+/// <summary>
 /// Monitor role required
 /// </summary>
 public class RequireMonitorAttribute() : RequirePrivilegeAttribute(Role.Monitor);

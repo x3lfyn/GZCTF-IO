@@ -17,6 +17,7 @@ import { useClipboard, useInputState } from '@mantine/hooks'
 import { useModals } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
 import {
+  mdiAccountMultiplePlus,
   mdiAccountOutline,
   mdiArrowLeftBold,
   mdiArrowRightBold,
@@ -165,6 +166,17 @@ const Users: FC = () => {
     }
   }
 
+  const onCreateGroup = async (user: UserInfoModel) => {
+    setDisabled(true)
+    try {
+      await api.team.ioSchoolCreateTeam({userName: user.userName!});
+    } catch (err: any) {
+      showErrorMsg(err, t)
+    } finally {
+      setDisabled(false)
+    }
+  }
+
   const onDelete = async (user: UserInfoModel) => {
     try {
       setDisabled(true)
@@ -298,6 +310,13 @@ const Users: FC = () => {
                         >
                           <Icon path={mdiPencilOutline} size={1} />
                         </ActionIcon>
+                        <ActionIconWithConfirm
+                          iconPath={mdiAccountMultiplePlus}
+                          color="orange"
+                          message="Create InsideOut team for this account?"
+                          disabled={disabled}
+                          onClick={() => onCreateGroup(user)}
+                        />
                         <ActionIconWithConfirm
                           iconPath={mdiLockReset}
                           color="orange"

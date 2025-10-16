@@ -1948,6 +1948,10 @@ export interface SignatureVerifyModel {
   publicKey: string;
 }
 
+export interface IoSchoolTeamCreateModel {
+  userName: string;
+}
+
 import { apiLanguage } from "@Utils/I18n";
 import type {
   AxiosInstance,
@@ -6006,6 +6010,17 @@ export class Api<
         type: ContentType.Json,
         ...params,
       }),
+
+    ioSchoolCreateTeam: (
+      data: IoSchoolTeamCreateModel,
+      params: RequestParams = {},
+    )=> this.request<void, RequestResponse>({
+      path: `/api/ioschoolteam`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      ...params,
+    }),
   };
 }
 

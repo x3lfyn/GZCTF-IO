@@ -332,8 +332,8 @@ export const ScoreboardTable: FC<ScoreboardProps> = ({ division, setDivision }) 
                       tableRank={base + idx + 1}
                       item={item}
                       onOpenDetail={() => {
-                        setCurrentItem(item)
-                        setItemDetailOpened(true)
+                        // setCurrentItem(item)
+                        // setItemDetailOpened(true)
                       }}
                       challenges={scoreboard.challenges}
                       iconMap={iconMap}

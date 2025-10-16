@@ -12,29 +12,29 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core'
-import { useScrollIntoView } from '@mantine/hooks'
-import { useModals } from '@mantine/modals'
-import { showNotification } from '@mantine/notifications'
-import { mdiAlertCircle, mdiCheck, mdiFlagOutline, mdiTimerSand } from '@mdi/js'
-import { Icon } from '@mdi/react'
-import { FC, useEffect, useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
-import { Link, useNavigate, useParams } from 'react-router'
-import { GameJoinModal } from '@Components/GameJoinModal'
-import { GameProgress } from '@Components/GameProgress'
-import { Markdown } from '@Components/MarkdownRenderer'
-import { WithNavBar } from '@Components/WithNavbar'
-import { useLanguage } from '@Utils/I18n'
-import { showErrorMsg } from '@Utils/Shared'
-import { useIsMobile } from '@Utils/ThemeOverride'
-import { getGameStatus, useGame } from '@Hooks/useGame'
-import { usePageTitle } from '@Hooks/usePageTitle'
-import { useTeams, useUser } from '@Hooks/useUser'
-import api, { GameJoinModel, ParticipationStatus } from '@Api'
+import {useScrollIntoView} from '@mantine/hooks'
+import {useModals} from '@mantine/modals'
+import {showNotification} from '@mantine/notifications'
+import {mdiAlertCircle, mdiCheck, mdiFlagOutline, mdiTimerSand} from '@mdi/js'
+import {Icon} from '@mdi/react'
+import {FC, useEffect, useState} from 'react'
+import {Trans, useTranslation} from 'react-i18next'
+import {Link, useNavigate, useParams} from 'react-router'
+import {GameJoinModal} from '@Components/GameJoinModal'
+import {GameProgress} from '@Components/GameProgress'
+import {Markdown} from '@Components/MarkdownRenderer'
+import {WithNavBar} from '@Components/WithNavbar'
+import {useLanguage} from '@Utils/I18n'
+import {showErrorMsg} from '@Utils/Shared'
+import {useIsMobile} from '@Utils/ThemeOverride'
+import {getGameStatus, useGame} from '@Hooks/useGame'
+import {usePageTitle} from '@Hooks/usePageTitle'
+import {useTeams, useUser} from '@Hooks/useUser'
+import api, {GameJoinModel, ParticipationStatus} from '@Api'
 import classes from '@Styles/Banner.module.css'
 
 const GetAlert = (status: ParticipationStatus, team: string) => {
-  const { t } = useTranslation()
+  const {t} = useTranslation()
 
   const GameAlertMap = new Map([
     [
@@ -42,7 +42,7 @@ const GetAlert = (status: ParticipationStatus, team: string) => {
       {
         color: 'yellow',
         icon: mdiTimerSand,
-        title: t('game.participation.alert.pending.title', { team }),
+        title: t('game.participation.alert.pending.title', {team}),
         content: t('game.participation.alert.pending.content'),
       },
     ],
@@ -61,7 +61,7 @@ const GetAlert = (status: ParticipationStatus, team: string) => {
       {
         color: 'red',
         icon: mdiAlertCircle,
-        title: t('game.participation.alert.suspended.title', { team }),
+        title: t('game.participation.alert.suspended.title', {team}),
         content: t('game.participation.alert.suspended.content'),
       },
     ],
@@ -71,7 +71,7 @@ const GetAlert = (status: ParticipationStatus, team: string) => {
   const data = GameAlertMap.get(status)
   if (data) {
     return (
-      <Alert color={data.color} icon={<Icon path={data.icon} />} title={data.title}>
+      <Alert color={data.color} icon={<Icon path={data.icon}/>} title={data.title}>
         {data.content}
       </Alert>
     )
@@ -80,25 +80,25 @@ const GetAlert = (status: ParticipationStatus, team: string) => {
 }
 
 const GameDetail: FC = () => {
-  const { id } = useParams()
+  const {id} = useParams()
   const numId = parseInt(id ?? '-1')
   const navigate = useNavigate()
 
-  const { game, error, mutate, status } = useGame(numId)
+  const {game, error, mutate, status} = useGame(numId)
 
   const theme = useMantineTheme()
 
-  const { startTime, endTime, finished, started, progress } = getGameStatus(game)
+  const {startTime, endTime, finished, started, progress} = getGameStatus(game)
 
-  const { locale } = useLanguage()
+  const {locale} = useLanguage()
 
-  const { user } = useUser()
-  const { teams } = useTeams()
+  const {user} = useUser()
+  const {teams} = useTeams()
 
   const modals = useModals()
   const isMobile = useIsMobile()
 
-  const { t } = useTranslation()
+  const {t} = useTranslation()
 
   usePageTitle(game?.title)
 
@@ -109,11 +109,11 @@ const GameDetail: FC = () => {
     }
   }, [error, navigate])
 
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>()
+  const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>()
 
   const [joinModalOpen, setJoinModalOpen] = useState(false)
 
-  useEffect(() => scrollIntoView({ alignment: 'center' }), [scrollIntoView])
+  useEffect(() => scrollIntoView({alignment: 'center'}), [scrollIntoView])
 
   const GameActionMap = new Map([
     [ParticipationStatus.Pending, t('game.participation.actions.pending')],
@@ -131,7 +131,7 @@ const GameDetail: FC = () => {
       showNotification({
         color: 'teal',
         message: t('game.notification.joined'),
-        icon: <Icon path={mdiCheck} size={1} />,
+        icon: <Icon path={mdiCheck} size={1}/>,
       })
       mutate()
     } catch (err) {
@@ -147,7 +147,7 @@ const GameDetail: FC = () => {
       showNotification({
         color: 'teal',
         message: t('game.notification.left'),
-        icon: <Icon path={mdiCheck} size={1} />,
+        icon: <Icon path={mdiCheck} size={1}/>,
       })
       mutate()
     } catch (err) {
@@ -166,21 +166,40 @@ const GameDetail: FC = () => {
 
   const onJoin = () =>
     modals.openConfirmModal({
-      title: t('game.content.join.confirm'),
-      children: (
-        <Stack gap="xs">
-          <Text size="sm">{t('game.content.join.content.0')}</Text>
-          <Text size="sm">
-            <Trans i18nKey="game.content.join.content.1" />
-          </Text>
-          <Text size="sm">
-            <Trans i18nKey="game.content.join.content.2" />
-          </Text>
-        </Stack>
-      ),
-      onConfirm: () => setJoinModalOpen(true),
-      confirmProps: { color: theme.primaryColor },
-    })
+        title: t('game.content.join.confirm'),
+        children: (
+          <Stack gap="xs">
+            <Text size="sm">{t('game.content.join.content.0')}</Text>
+            <Text size="sm">
+              <Trans i18nKey="game.content.join.content.1"/>
+            </Text>
+            <Text size="sm">
+              <Trans i18nKey="game.content.join.content.2"/>
+            </Text>
+          </Stack>
+        ),
+        onConfirm: () => {
+          if (teams && teams.length == 1) {
+            let model: GameJoinModel = {teamId: teams[0].id, division: null, inviteCode: null}
+            onSubmitJoin(model).catch(err => {
+              showNotification({
+                color: 'teal',
+                message: err.toString(),
+                icon: <Icon path={mdiAlertCircle} size={1}/>,
+              })
+              setJoinModalOpen(true)
+            })
+          } else {
+            setJoinModalOpen(true)
+          }
+        },
+        confirmProps:
+          {
+            color: theme.primaryColor
+          }
+        ,
+      }
+    )
 
   const onLeave = () =>
     modals.openConfirmModal({
@@ -192,7 +211,7 @@ const GameDetail: FC = () => {
         </Stack>
       ),
       onConfirm: onSubmitLeave,
-      confirmProps: { color: theme.primaryColor },
+      confirmProps: {color: theme.primaryColor},
     })
 
   const ControlButtons = (
@@ -229,14 +248,14 @@ const GameDetail: FC = () => {
                   ? t('game.tag.multiplayer')
                   : game.limit === 1
                     ? t('game.tag.individual')
-                    : t('game.tag.limited', { count: game.limit })}
+                    : t('game.tag.limited', {count: game.limit})}
               </Badge>
               {game?.hidden && <Badge variant="outline">{t('game.tag.hidden')}</Badge>}
             </Group>
             <Stack gap={2}>
               <Title className={classes.title}>{game?.title}</Title>
               <Text size="sm" c="dimmed">
-                <Trans i18nKey="game.content.joined_status" values={{ count: game?.teamCount ?? 0 }} />
+                <Trans i18nKey="game.content.joined_status" values={{count: game?.teamCount ?? 0}}/>
               </Text>
             </Stack>
             <Group justify="space-between">
@@ -257,12 +276,12 @@ const GameDetail: FC = () => {
                 </Text>
               </Stack>
             </Group>
-            <GameProgress percentage={progress} />
+            <GameProgress percentage={progress}/>
             <Group>{ControlButtons}</Group>
           </Stack>
           <BackgroundImage className={classes.banner} src={game?.poster ?? ''} radius="sm">
             <Center h="100%">
-              {!game?.poster && <Icon path={mdiFlagOutline} size={4} color={theme.colors.gray[5]} />}
+              {!game?.poster && <Icon path={mdiFlagOutline} size={4} color={theme.colors.gray[5]}/>}
             </Center>
           </BackgroundImage>
         </Group>
@@ -273,27 +292,21 @@ const GameDetail: FC = () => {
           {teamRequire && (
             <Alert
               color="yellow"
-              icon={<Icon path={mdiAlertCircle} />}
+              icon={<Icon path={mdiAlertCircle}/>}
               title={t('game.participation.alert.team_required.title')}
             >
-              <Trans i18nKey="game.participation.alert.team_required.content">
-                _
-                <Anchor component={Link} to="/teams">
-                  _
-                </Anchor>
-                _
-              </Trans>
+              {t('game.participation.alert.team_required.ioschool')}
             </Alert>
           )}
           {status === ParticipationStatus.Accepted && !started && (
-            <Alert color="teal" icon={<Icon path={mdiCheck} />} title={t('game.participation.alert.not_started.title')}>
+            <Alert color="teal" icon={<Icon path={mdiCheck}/>} title={t('game.participation.alert.not_started.title')}>
               {t('game.participation.alert.not_started.content', {
                 team: game?.teamName ?? '',
               })}
               {isMobile && t('game.participation.alert.not_started.mobile')}
             </Alert>
           )}
-          <Markdown source={game?.content ?? ''} />
+          <Markdown source={game?.content ?? ''}/>
         </Stack>
         <GameJoinModal
           title={t('game.content.join.title')}
