@@ -40,7 +40,7 @@ public static class Limits
     /// <summary>
     /// 用户名最大长度
     /// </summary>
-    public const int MaxUserNameLength = 15;
+    public const int MaxUserNameLength = 30;
 
     /// <summary>
     /// 密码最小长度

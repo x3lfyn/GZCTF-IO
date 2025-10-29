@@ -28,6 +28,7 @@ static class IdentityExtension
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
                 options.SignIn.RequireConfirmedEmail = true;
 
                 // Allow all characters in username
